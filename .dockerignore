@@ -1,0 +1,20 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore virtual environments
+env/
+venv/
+
+
+
+
+# Ignore editor and OS-specific files
+.DS_Store
+*.swp
+*.swo
+
+# Ignore test or backup files
+*.bak
+*.tmp
