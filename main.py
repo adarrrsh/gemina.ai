@@ -28,7 +28,7 @@ def generate_script():
     if not voiceover_file or not prompt:
         return jsonify({"error": "Missing prompt or file"}), 400
 
-
+    os.makedirs("audio", exist_ok=True)
     voiceover_file.save("./audio/temp.mp3")
 
 
