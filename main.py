@@ -2,7 +2,9 @@ import os
 from langchain_openai import AzureOpenAIEmbeddings, AzureChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,send_from_directory
+from flask_cors import CORS
+import glob
 import whisper
 os.environ["AZURE_OPENAI_API_KEY"] = "11APLu6CZtZnYvxroeo8CHAacCt9wDXCb7miKIFwTsgB3bnK5SJGJQQJ99BEACYeBjFXJ3w3AAABACOGYqeV"
 os.environ["AZURE_OPENAI_ENDPOINT"] = "https://aiplanetllm.openai.azure.com/"
@@ -17,7 +19,10 @@ os.environ["AZURE_OPENAI_ENDPOINT"] = os.environ.get("AZURE_OPENAI_ENDPOINT")
 os.environ["AZURE_OPENAI_API_VERSION"] = os.environ.get("AZURE_OPENAI_API_VERSION")
 
 app = Flask(__name__)
-
+CORS(app,origins="*")
+@app.route('/media/<path:filename>')
+def serve_media(filename):
+    return send_from_directory(os.path.join(app.root_path, 'media'), filename)
 
 @app.route("/generate_script",methods=["POST"])
 def generate_script():
@@ -40,14 +45,19 @@ def generate_script():
 
     write_file(python_script)
     try:
+        
         os.system("manim -pql generated.py ConceptScene")
-        video_path = "media/videos/generated/1080p60/ConceptScene.mp4"
+        folder_path = "media/videos/generated/480p15/"
+        files = glob.glob(os.path.join(folder_path, '*'))
+        latest_file = max(files, key=os.path.getctime)
+        video_path = latest_file
     except Exception as e:
         return jsonify({"error": str(e)})
     return jsonify({
         "transcription": voiceover,
         "script": python_script,
-        "script_written": True
+        "script_written": True,
+        "path":video_path
     })
 
 
@@ -102,7 +112,7 @@ Here is the **conceptual prompt**:
 Here is the **voiceover narration**:
 {voiceover}
 
-Now, generate the full Manim script:
+Now, generate the full Manim script with no errors:
 """
 
 
@@ -133,6 +143,7 @@ def write_file(script):
         return True
     except Exception as e:
         return False
+
 
 
 
