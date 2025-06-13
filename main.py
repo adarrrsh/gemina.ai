@@ -6,14 +6,13 @@ from flask import Flask, request, jsonify,send_from_directory
 from flask_cors import CORS
 import glob
 import whisper
-os.environ["AZURE_OPENAI_API_KEY"] = "11APLu6CZtZnYvxroeo8CHAacCt9wDXCb7miKIFwTsgB3bnK5SJGJQQJ99BEACYeBjFXJ3w3AAABACOGYqeV"
-os.environ["AZURE_OPENAI_ENDPOINT"] = "https://aiplanetllm.openai.azure.com/"
-os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "gpt-4o"
-os.environ["AZURE_OPENAI_API_VERSION"] = "2024-12-01-preview"
-# os.environ["AZURE_OPENAI_API_VERSION"] = "2024-11-20"
-os.environ["SPEECH_KEY"] ="G86doTy0u0vyRxeblaG69zbSCUbQXLHdeSokDqdFh4kaxVGFzGSQJQQJ99BEACYeBjFXJ3w3AAAYACOG48Be"
-os.environ["ENDPOINT"] = "https://eastus.api.cognitive.microsoft.com/"
-os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "gpt-4o"
+os.environ["AZURE_OPENAI_API_KEY"] = "Your API KEY"
+os.environ["AZURE_OPENAI_ENDPOINT"] = "Your endpoint
+os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "your deployement name"
+os.environ["AZURE_OPENAI_API_VERSION"] = "your version
+os.environ["SPEECH_KEY"] ="your speech key"
+os.environ["ENDPOINT"] = "your endpoint"
+os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "your deployement"
 os.environ["AZURE_OPENAI_API_KEY"] = os.environ.get("AZURE_OPENAI_API_KEY")
 os.environ["AZURE_OPENAI_ENDPOINT"] = os.environ.get("AZURE_OPENAI_ENDPOINT")
 os.environ["AZURE_OPENAI_API_VERSION"] = os.environ.get("AZURE_OPENAI_API_VERSION")
@@ -70,10 +69,10 @@ def speech_to_text(speech):
 def generate_script(prompt_text, voiceover_text):
     # Initialize embeddings
     embeddings = AzureOpenAIEmbeddings(
-        azure_endpoint="https://aiplanetllm.openai.azure.com/",
-        deployment="text-embedding-ada-002",
+        azure_endpoint="your endpoing",
+        deployment="your deployement",
         openai_api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        openai_api_version="2023-05-15"
+        openai_api_version="your version"
     )
 
     # Initialize the LLM
